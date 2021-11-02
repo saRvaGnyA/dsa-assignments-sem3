@@ -248,4 +248,9 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
             posIterator.remove();
         }
     }
+
+    // public method to create and return the element iterators
+    public Iterator<E> iterator() {
+        return new ElementIterator();
+    }
 }
