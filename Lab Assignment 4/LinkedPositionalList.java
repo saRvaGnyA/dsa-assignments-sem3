@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.lang.Iterable;
 
 // We will implement the Positional List ADT as a doubly linked list
 public class LinkedPositionalList<E> implements PositionalList<E> {
@@ -88,7 +89,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
         if (node == this.header || node == this.trailer)
             return null; // don't return private attributes of the class
         else
-            return node; // Node<E> implements Position<E>F, hence can be returned
+            return node; // Node<E> implements Position<E>, hence can be returned
     }
 
     // add a node b/w 2 provided nodes
@@ -115,7 +116,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     }
 
     public Position<E> last() {
-        return position(this.header.getPrev());
+        return position(this.trailer.getPrev());
     }
 
     public Position<E> before(Position<E> p) throws IllegalArgumentException {
@@ -213,7 +214,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
 
     // ----- NESTED POSITION ITERABLE CLASS -------->
 
-    // java.util.Iterable implementation for Position<E>
+    // java.lang.Iterable implementation for Position<E>
     private class PositionIterable implements Iterable<Position<E>> {
         // Implement(override) the iterator() method for Position<E>
         public Iterator<Position<E>> iterator() {
