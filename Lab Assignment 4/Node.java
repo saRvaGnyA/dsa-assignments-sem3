@@ -1,5 +1,7 @@
 package com.company;
 
+// REDUNDANT CLASS
+
 // We use a linked list node to implement the Position ADT
 public class Node<E> implements Position<E> {
 
