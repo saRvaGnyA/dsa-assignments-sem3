@@ -7,30 +7,30 @@ public interface Tree<E> extends Iterable<E> {
 
     // ----- ACCESSOR METHODS -------->
 
-    Position<E> root();
+    Position<E> root(); // returns position of the root of the tree
 
-    Position<E> parent(Position<E> p) throws IllegalArgumentException;
+    Position<E> parent(Position<E> p) throws IllegalArgumentException; // returns position of the parent (if any) of the passed node
 
-    Iterable<Position<E>> children(Position<E> p) throws IllegalArgumentException;
+    Iterable<Position<E>> children(Position<E> p) throws IllegalArgumentException; // returns an iterable of children positions (if any) of the passed node
 
-    int numChildren(Position<E> p) throws IllegalArgumentException;
+    int numChildren(Position<E> p) throws IllegalArgumentException; // returns number of children of the passed position
 
     // ----- QUERY METHODS -------->
 
-    boolean isExternal(Position<E> p) throws IllegalArgumentException;
+    boolean isExternal(Position<E> p) throws IllegalArgumentException; // returns true if the passed node is a leaf node
 
-    boolean isInternal(Position<E> p) throws IllegalArgumentException;
+    boolean isInternal(Position<E> p) throws IllegalArgumentException; // returns true if the passed node has children
 
-    boolean isRoot(Position<E> p) throws IllegalArgumentException;
+    boolean isRoot(Position<E> p) throws IllegalArgumentException; // returns true if the passed node is the root
 
     // ----- GENERAL METHODS -------->
 
-    int size();
+    int size(); // returns size of the tree
 
-    boolean isEmpty();
+    boolean isEmpty(); // returns true if the tree is empty
 
-    Iterator<E> iterator();
+    Iterator<E> iterator(); // returns an iterator of all the elements of the tree
 
-    Iterable<Position<E>> positions();
+    Iterable<Position<E>> positions(); // returns an iterable of all the positions of the tree
 
 }

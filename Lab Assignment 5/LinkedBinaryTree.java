@@ -16,6 +16,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
         // -----  CONSTRUCTOR FOR NODE -------->
         public Node(E e, Node<E> parent, Node<E> left, Node<E> right) {
+            this.element = e;
             this.parent = parent;
             this.left = left;
             this.right = right;
@@ -61,8 +62,8 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     // ----- CORRESPONDING FACTORY FUNCTION TO CREATE NEW NODE  -------->
-    protected Node<E> createNode(E e, Node<E> parent, Node<E> left, Node<E> right) {
-        return new Node<E>(e, parent, left, right);
+    protected Node<E> createNode(E e, Node<E> parent, Node<E> left_node, Node<E> right_node) {
+        return new Node<E>(e, parent, left_node, right_node);
     }
 
     // ----- ATTRIBUTES OF A LINKED BINARY TREE  -------->
@@ -75,7 +76,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     }
 
     // ----- OTHER PRIVATE UTILITY TO VALIDATE POSITIONS -------->
-    protected Node<E> validate(Position<E> p) {
+    protected Node<E> validate(Position<E> p) throws IllegalArgumentException {
         if (!(p instanceof Node))
             throw new IllegalArgumentException("Not valid position type");
         Node<E> posNode = (Node<E>) p; // typecast
@@ -142,7 +143,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         if (node.getRight() != null)
             throw new IllegalStateException("Passed node p already has a left child");
         Node<E> r = createNode(e, node, null, null);
-        node.setLeft(r);
+        node.setRight(r);
         ++this.size;
         return r;
     }
@@ -160,14 +161,18 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         Node<E> node = validate(p);
         size += t1.size() + t2.size();
         if (!t1.isEmpty()) {
+            // attach the subtree with the given tree at the given node
             t1.root.setParent(node);
             node.setLeft(t1.root);
+            // dissolve the independent subtree units
             t1.root = null;
             t1.size = 0;
         }
         if (!t2.isEmpty()) {
+            // attach the subtree with the given tree at the given node
             t2.root.setParent(node);
             node.setLeft(t2.root);
+            // dissolve the independent subtree units
             t2.root = null;
             t2.size = 0;
         }
@@ -185,7 +190,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         // 1 or 0 children case - if left node is null, take the right node
         Node<E> child_to_replace = (node.getLeft() != null) ? node.getLeft() : node.getRight();
 
-        // in case the right child is null too
+        // in case the right child is not null
         if (child_to_replace != null)
             child_to_replace.setParent(node.getParent());
 
