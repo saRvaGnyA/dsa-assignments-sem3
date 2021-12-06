@@ -1,6 +1,8 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
@@ -63,7 +65,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     // ----- CORRESPONDING FACTORY FUNCTION TO CREATE NEW NODE  -------->
     protected Node<E> createNode(E e, Node<E> parent, Node<E> left_node, Node<E> right_node) {
-        return new Node<E>(e, parent, left_node, right_node);
+        return new Node<>(e, parent, left_node, right_node);
     }
 
     // ----- ATTRIBUTES OF A LINKED BINARY TREE  -------->
@@ -219,6 +221,92 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return temp;
     }
 
-    // iterator() and positions() method remain to override - depending on traversals
+    // ----- NESTED ELEMENT ITERATOR CLASS  -------->
+    // this class is the corresponding element Iterator implementation adapted to position Iterator
+    private class ElementIterator implements Iterator<E> {
 
+        Iterator<Position<E>> positionIterator = positions().iterator();
+
+        @Override
+        public boolean hasNext() {
+            return positionIterator.hasNext();
+        }
+
+        @Override
+        public E next() {
+            return positionIterator.next().getElement(); // returns the next element
+        }
+
+        @Override
+        public void remove() {
+            positionIterator.remove();
+        }
+    }
+
+    // return iterator of all elements in the tree
+    @Override
+    public Iterator<E> iterator() {
+        return new ElementIterator();
+    }
+
+    // ----- TREE TRAVERSALS  -------->
+
+    // PREORDER TRAVERSAL
+    // add positions of a subtree rooted at passed position p to a passed ArrayList in preorder manner - first the node, then its children
+    private void preorderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        snapshot.add(p);
+        for (Position<E> c : children(p))
+            preorderSubtree(c, snapshot);
+    }
+
+    // return an iterable of positions of the tree in preorder fashion
+    public Iterable<Position<E>> preorder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        // call the recursive subroutine for the root node (i.e. entire tree preorder)
+        if (!isEmpty())
+            preorderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    // POSTORDER TRAVERSAL
+    // add positions of a subtree rooted at passed position p to a passed ArrayList in postorder manner - first the children, then the node
+    private void postorderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        for (Position<E> c : children(p))
+            postorderSubtree(c, snapshot);
+        snapshot.add(p);
+    }
+
+    // return an iterable of positions of the tree in preorder fashion
+    public Iterable<Position<E>> postorder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        // call the recursive subroutine for the root node (i.e. entire tree postorder)
+        if (!isEmpty())
+            postorderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    // INORDER TRAVERSAL
+    // add positions of a subtree rooted at passed position p to a passed ArrayList in postorder manner: inorder pattern is - LEFT, NODE, RIGHT
+    private void inorderSubtree(Position<E> p, List<Position<E>> snapshot) {
+        if (left(p) != null)
+            inorderSubtree(left(p), snapshot);
+        snapshot.add(p);
+        if (right(p) != null)
+            inorderSubtree(right(p), snapshot);
+    }
+
+    // return an iterable of positions of the tree in an inorder fashion
+    public Iterable<Position<E>> inorder() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        // call the recursive subroutine for the root node (i.e. entire tree inorder)
+        if (!isEmpty())
+            inorderSubtree(root(), snapshot);
+        return snapshot;
+    }
+
+    // make inorder traversal the default iterable for the tree
+    @Override
+    public Iterable<Position<E>> positions() {
+        return inorder();
+    }
 }
