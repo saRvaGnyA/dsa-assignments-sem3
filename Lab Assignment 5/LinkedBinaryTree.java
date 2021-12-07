@@ -1,6 +1,10 @@
 package com.company;
 
-import java.util.*;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
@@ -310,6 +314,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     // BFS TRAVERSAL
     // we use a queue ADT (its FIFO nature) to add nodes in a level-order
+    // we use Java collections Deque for implementing that
     public Iterable<Position<E>> BFS() {
         List<Position<E>> snapshot = new ArrayList<>();
         if (!this.isEmpty()) {
@@ -325,7 +330,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
         return snapshot;
     }
-    
+
     // ----- TREE APPLICATIONS  -------->
 
     // ----- Q3  -------->
@@ -343,5 +348,24 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             System.out.print(")");
         }
     }
+
+    // ----- Q4  -------->
+
+    // Displaying a tree horizontally on the console - print the rightmost leaf node first at the first line, then its parents at the below lines and then the leftmost leaf nodes. For every recursive call to the child, an indentation is given.
+
+    public void display(Position<E> p, int level) throws IllegalArgumentException {
+        if (p != null) {
+            Node<E> node = validate(p);
+            display(node.getRight(), level + 1);
+            if (level != 0) {
+                for (int i = 0; i < level - 1; ++i)
+                    System.out.print("|\t");
+                System.out.println("|---" + node.getElement());
+            } else
+                System.out.println(node.getElement());
+            display(node.getLeft(), level + 1);
+        }
+    }
+
 
 }

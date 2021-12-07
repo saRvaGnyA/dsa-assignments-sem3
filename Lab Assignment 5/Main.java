@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         // ----- TREE APPLICATIONS  -------->
+
         // ----- Q3  -------->
 
         LinkedBinaryTree<String> exp = new LinkedBinaryTree<>();
@@ -41,5 +42,16 @@ public class Main {
         exp.attach(right, exp3, exp4);
 
         exp.printArithmeticInorder(root);
+        System.out.println("\n");
+
+        // ----- Q4  -------->
+
+        LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+        Position<Integer> tree_root = tree.addRoot(1);
+        Position<Integer> root_left = tree.addLeft(tree_root, 2);
+        tree.addRight(tree_root, 3);
+        tree.addLeft(root_left, 4);
+        tree.addRight(root_left, 5);
+        tree.display(tree_root, 0);
     }
 }
