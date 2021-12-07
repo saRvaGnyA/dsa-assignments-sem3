@@ -6,7 +6,47 @@ public class Main {
 
         // ----- TREE APPLICATIONS  -------->
 
+
+        // ----- Q1  -------->
+
+        System.out.println("----- Q1  -------->\n");
+
+        GeneralTree<String> t = new GeneralTree<>();
+        Position<String> tRoot = t.addRoot("Electronics R’Us");
+        t.addChild(tRoot, "R&D");
+
+        GeneralTree<String> t2 = new GeneralTree<>();
+        Position<String> t2Root = t2.addRoot("Sales");
+        t2.addChild(t2Root, "Domestic");
+
+        GeneralTree<String> t22 = new GeneralTree<>();
+        Position<String> t22Root = t22.addRoot("International");
+        t22.addChild(t22Root, "Canada");
+        t22.addChild(t22Root, "S. America");
+        Position<String> t223 = t22.addChild(t22Root, "Overseas");
+        t22.addChild(t223, "Africa");
+        t22.addChild(t223, "Europe");
+        t22.addChild(t223, "Asia");
+        t22.addChild(t223, "Australia");
+
+        t2.attach(t2Root, t22);
+        t.attach(tRoot, t2);
+
+        t.addChild(tRoot, "Purchasing");
+
+        GeneralTree<String> t4 = new GeneralTree<>();
+        Position<String> t4Root = t4.addRoot("Manufacturing");
+        t4.addChild(t4Root, "TV");
+        t4.addChild(t4Root, "CD");
+        t4.addChild(t4Root, "Tuner");
+        t.attach(tRoot, t4);
+
+        t.display(tRoot, 0, "");
+        System.out.println("\n");
+
         // ----- Q3  -------->
+
+        System.out.println("----- Q3  -------->\n");
 
         LinkedBinaryTree<String> exp = new LinkedBinaryTree<>();
         Position<String> root = exp.addRoot("-");
@@ -46,6 +86,8 @@ public class Main {
 
         // ----- Q4  -------->
 
+        System.out.println("----- Q4  -------->\n");
+
         LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
         Position<Integer> tree_root = tree.addRoot(1);
         Position<Integer> root_left = tree.addLeft(tree_root, 2);
@@ -53,5 +95,7 @@ public class Main {
         tree.addLeft(root_left, 4);
         tree.addRight(root_left, 5);
         tree.display(tree_root, 0);
+        System.out.println("\n");
+
     }
 }
