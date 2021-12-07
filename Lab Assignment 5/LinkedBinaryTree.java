@@ -173,7 +173,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         if (!t2.isEmpty()) {
             // attach the subtree with the given tree at the given node
             t2.root.setParent(node);
-            node.setLeft(t2.root);
+            node.setRight(t2.root);
             // dissolve the independent subtree units
             t2.root = null;
             t2.size = 0;
@@ -309,4 +309,24 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     public Iterable<Position<E>> positions() {
         return inorder();
     }
+
+
+    // ----- TREE APPLICATIONS  -------->
+
+    // ----- Q3  -------->
+
+    // Printing the arithmetic expression is equivalent to inorder traversal of the tree, with printing an opening bracket everytime inorder for the left node is called for a node and printing the corresponding right bracket when inorder for the right node is called for that node
+
+    public void printArithmeticInorder(Position<E> p) {
+        if (left(p) != null) {
+            System.out.print("(");
+            printArithmeticInorder(left(p));
+        }
+        System.out.print(p.getElement());
+        if (right(p) != null) {
+            printArithmeticInorder(right(p));
+            System.out.print(")");
+        }
+    }
+
 }
