@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
@@ -310,7 +308,24 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return inorder();
     }
 
-
+    // BFS TRAVERSAL
+    // we use a queue ADT (its FIFO nature) to add nodes in a level-order
+    public Iterable<Position<E>> BFS() {
+        List<Position<E>> snapshot = new ArrayList<>();
+        if (!this.isEmpty()) {
+            Deque<Position<E>> levelOrder = new ArrayDeque<>();
+            levelOrder.addFirst(this.root);
+            while (!levelOrder.isEmpty()) {
+                Position<E> next = levelOrder.removeFirst();
+                snapshot.add(next);
+                for (Position<E> child : children(next)) {
+                    levelOrder.addLast(child);
+                }
+            }
+        }
+        return snapshot;
+    }
+    
     // ----- TREE APPLICATIONS  -------->
 
     // ----- Q3  -------->
