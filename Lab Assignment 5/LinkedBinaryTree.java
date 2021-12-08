@@ -360,7 +360,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             if (level != 0) {
                 for (int i = 0; i < level - 1; ++i)
                     System.out.print("|\t");
-                System.out.println("|---" + node.getElement());
+                System.out.println("|----" + node.getElement());
             } else
                 System.out.println(node.getElement());
             display(node.getLeft(), level + 1);

@@ -1,15 +1,16 @@
 package com.company;
 
+import java.io.File;
+
 public class Main {
 
     public static void main(String[] args) {
 
         // ----- TREE APPLICATIONS  -------->
 
-
         // ----- Q1  -------->
 
-        System.out.println("----- Q1  -------->\n");
+        System.out.println("!----- Q1  -------->\n");
 
         GeneralTree<String> t = new GeneralTree<>();
         Position<String> tRoot = t.addRoot("Electronics R’Us");
@@ -44,9 +45,19 @@ public class Main {
         t.display(tRoot, 0, "");
         System.out.println("\n");
 
+        // ----- Q2  -------->
+
+        System.out.println("!----- Q2  -------->\n");
+
+        File f = new File("C:\\Program Files\\7-Zip");
+        DirectoryTree dir = new DirectoryTree();
+        DirectoryTree.Node r = dir.addRoot(f);
+        dir.printDirectory(r);
+        System.out.println("\n");
+
         // ----- Q3  -------->
 
-        System.out.println("----- Q3  -------->\n");
+        System.out.println("!----- Q3  -------->\n");
 
         LinkedBinaryTree<String> exp = new LinkedBinaryTree<>();
         Position<String> root = exp.addRoot("-");
@@ -86,7 +97,7 @@ public class Main {
 
         // ----- Q4  -------->
 
-        System.out.println("----- Q4  -------->\n");
+        System.out.println("!----- Q4  -------->\n");
 
         LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
         Position<Integer> tree_root = tree.addRoot(1);
