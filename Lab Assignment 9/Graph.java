@@ -22,6 +22,16 @@ public class Graph {
             for (int j = 0; j < this.vertices; ++j)
                 this.adj[i][j] = Integer.MAX_VALUE;
         }
+        System.out.println("Enter distances b/w the cities");
+        for (int i = 0; i < this.vertices; ++i) {
+            for (int j = i; j < this.vertices; ++j) {
+                if (i != j) {
+                    System.out.print("Enter distance b/w cities " + this.cityNames[i] + " and " + this.cityNames[j] + ": ");
+                    int dist = s.nextInt();
+                    addEdge(i, j, dist);
+                }
+            }
+        }
     }
 
     // add edge b/w specified nodes
@@ -68,7 +78,9 @@ public class Graph {
         System.out.println("\n");
     }
 
+    // MST by Prims algorithm
     public void prims(int source) {
+        int MSTCost = 0;
         int[][] t = new int[2][this.vertices - 1]; // to store the edges of the MST
         int[] near = new int[this.vertices]; // to store the nearest vertices, initialize with infinity
         for (int i = 0; i < this.vertices; ++i) {
@@ -88,6 +100,7 @@ public class Graph {
         t[0][0] = source;
         t[1][0] = min_vertex;
         near[min_vertex] = -1;
+        MSTCost += min_edge;
 
         for (int i = 0; i < this.vertices; ++i) {
             if (near[i] != -1) {
@@ -111,6 +124,7 @@ public class Graph {
             // include that min edge to the MST
             t[0][i + 1] = near[min_vertex];
             t[1][i + 1] = min_vertex;
+            MSTCost += min_edge;
             near[min_vertex] = -1;
             // update the `near` array
             for (int j = 0; j < this.vertices; ++j) {
@@ -121,8 +135,56 @@ public class Graph {
 
         // print the MST
         for (int i = 0; i < this.vertices - 1; ++i) {
-            System.out.print(t[0][i] + " -- " + t[1][i] + ", ");
+            System.out.print(t[0][i] + "." + this.cityNames[t[0][i]] + " -- " + t[1][i] + "." + this.cityNames[t[1][i]] + ", ");
+        }
+        System.out.println("\nMST Cost is: " + MSTCost + " with source vertex " + source + "\n");
+    }
+
+    // private utility function union and find for disjoint sets used in kruskal's algorithm
+    private static int find(int vertex, int[] parent) {
+        while (parent[vertex] != vertex) {
+            vertex = parent[vertex];
+        }
+        return vertex;
+    }
+
+    private static void union(int childVertex, int parentVertex, int[] parent) {
+        parent[find(childVertex, parent)] = parentVertex;
+    }
+
+    // MST by Kruskal's algorithm
+    public void kruskal() {
+        int MSTCost = 0;
+        int[] parent = new int[this.vertices]; // disjoint sets for each vertex
+
+        // initialize the disjoint set parents
+        for (int i = 0; i < this.vertices; ++i) {
+            parent[i] = i;
         }
 
+        // For V vertices, we need to find V-1 minimum edges such that they don't form a cycle when included in the MST
+        for (int edges = 0; edges < this.vertices - 1; ++edges) {
+            int min_edge = Integer.MAX_VALUE;
+            int v1 = -1;
+            int v2 = -1;
+
+            // find the minimum edge from the adjacency matrix which is not included in the MST and does not form a cycle(i.e. the parents of both vertices differ)
+            for (int i = 0; i < this.vertices; ++i) {
+                for (int j = 0; j < this.vertices; ++j) {
+                    if (find(i, parent) != find(j, parent) && this.adj[i][j] < min_edge) {
+                        min_edge = this.adj[i][j];
+                        v1 = i;
+                        v2 = j;
+                    }
+                }
+            }
+
+            // make v2 the parent of v1
+            union(v1, v2, parent);
+            System.out.print(v1 + "." + this.cityNames[v1] + " -- " + v2 + "." + this.cityNames[v2] + ", ");
+            MSTCost += min_edge;
+        }
+        System.out.println("\nMST Cost is: " + MSTCost + "\n");
     }
+
 }

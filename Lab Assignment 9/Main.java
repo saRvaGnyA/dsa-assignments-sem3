@@ -1,16 +1,25 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        Graph g = new Graph(4);
-        g.addEdge(0, 1, 5);
-        g.addEdge(0, 2, 8);
-        g.addEdge(1, 2, 10);
-        g.addEdge(1, 3, 15);
-        g.addEdge(2, 3, 20);
-        g.BFS(2);
-        g.DFS(2);
-        g.prims(2);
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter number of cities involved in your map: ");
+        int cities = s.nextInt();
+        Graph g = new Graph(cities);
+        System.out.print("Enter the source vertex for BFS Traversals: ");
+        int source = s.nextInt();
+        g.BFS(source);
+        System.out.print("Enter the source vertex for DFS Traversals: ");
+        source = s.nextInt();
+        g.DFS(source);
+        System.out.print("Enter the source vertex for Prims Minimal Spanning Tree: ");
+        source = s.nextInt();
+        g.prims(source);
+        System.out.print("Kruskal's Minimal Spanning Tree is: ");
+        g.kruskal();
     }
+
 }
